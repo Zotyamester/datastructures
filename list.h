@@ -32,8 +32,8 @@ List *scan_list(FILE *fp);
 List *copy_list(List *list);
 /**Makes a sublist of the given list. The sublist will be a from left-closed, from right-open interval.**/
 List *sublist(List *list, int from, int to);
-/**Adds a list to another.**/
-void add_list(List *list, List *other);
+/**Links a list to another.**/
+void link_list(List *list, List *other);
 /**Reverses the list.**/
 void reverse_list(List *list);
 /**Adds a new node to the head of the list.**/
