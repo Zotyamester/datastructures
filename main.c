@@ -224,8 +224,9 @@ bool testcase10()
     return true;
 }
 
-/* ---------- */
+/** ---------- **/
 
+/** MAIN **/
 int main(void)
 {
 
