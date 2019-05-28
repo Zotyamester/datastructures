@@ -1,3 +1,12 @@
+/**
+ * \file list.h
+ *
+ * This file contains the declarations of list-related functions.
+ * The list is a doubly-linked list.
+ * @author Zoltan Szatmary
+ *
+ **/
+
 #include "hashtable.h"
 
 struct HashTable {

@@ -1,3 +1,11 @@
+/**
+ * \file hashtable.h
+ *
+ * This file contains the declarations of hashtable functions.
+ * @author Zoltan Szatmary
+ *
+ **/
+
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
