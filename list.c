@@ -9,7 +9,7 @@
 #include "list.h"
 
 struct List {
-    ListNode *start, *end;
+    ListNode *head, *tail;
     size_t size;
 };
 
@@ -18,7 +18,7 @@ List *create_list()
     List *list = (List*) malloc(sizeof(List));
     if (list == NULL)
         return NULL;
-    list->start = list->end = NULL;
+    list->head = list->tail = NULL;
     list->size = 0;
     return list;
 }
@@ -35,12 +35,12 @@ List *create_list_from_array(int *array, size_t size)
         return list;
     root->data = array[0];
     root->prev = root->next = NULL;
-    list->start = list->end = root;
+    list->head = list->tail = root;
     ListNode *moving = root;
     for (int i = 1; i < size; ++i) {
         ListNode *node = (ListNode*) malloc(sizeof(ListNode));
         if (node == NULL) {
-            list->end = moving;
+            list->tail = moving;
             list->size = i;
             return list;
         }
@@ -66,13 +66,13 @@ List *scan_list(FILE *fp)
         return list;
     node->data = temp;
     node->prev = node->next = NULL;
-    list->start = list->end = node;
+    list->head = list->tail = node;
     list->size = 1;
     ListNode *moving = node;
     while (fscanf(fp, "%d", &temp) == 1) {
         node = (ListNode*) malloc(sizeof(ListNode));
         if (node == NULL) {
-            list->end = moving;
+            list->tail = moving;
             return list;
         }
         node->data = temp;
@@ -91,23 +91,23 @@ List *copy_list(List *list)
     if (copy == NULL)
         return NULL;
     if (list->size == 0) {
-        copy->start = copy->end = NULL;
+        copy->head = copy->tail = NULL;
         copy->size = 0;
         return copy;
     }
     copy->size = 0;
     ListNode *new_node = (ListNode*) malloc(sizeof(ListNode));
-    copy->start = copy->end = new_node;
+    copy->head = copy->tail = new_node;
     if (new_node == NULL)
         return copy;
-    new_node->data = list->start->data;
+    new_node->data = list->head->data;
     new_node->prev = new_node->next = NULL;
     copy->size = 1;
-    ListNode *lmoving=list->start->next, *cmoving=new_node;
+    ListNode *lmoving=list->head->next, *cmoving=new_node;
     while (lmoving != NULL) {
         ListNode *new_node = (ListNode*) malloc(sizeof(ListNode));
         if (new_node == NULL) {
-            copy->end = cmoving;
+            copy->tail = cmoving;
             return copy;
         }
         new_node->data = lmoving->data;
@@ -118,7 +118,7 @@ List *copy_list(List *list)
         cmoving = new_node;
         ++copy->size;
     }
-    copy->end = cmoving;
+    copy->tail = cmoving;
     return copy;
 }
 
@@ -127,17 +127,17 @@ List *sublist(List *list, int from, int to)
     List *new_list = create_list();
     if (new_list == NULL)
         return NULL;
-    if (list->start == NULL)
+    if (list->head == NULL)
         return new_list;
-    ListNode *lstart = list->start;
-    for (int i = 0; i < from; ++i, lstart = lstart->next);
+    ListNode *lhead = list->head;
+    for (int i = 0; i < from; ++i, lhead = lhead->next);
     ListNode *root = (ListNode*) malloc(sizeof(ListNode));
     if (root == NULL)
         return new_list;
-    root->data = lstart->data;
+    root->data = lhead->data;
     root->prev = root->next = NULL;
-    new_list->start = root;
-    ListNode *moving = lstart->next, *new_moving = root;
+    new_list->head = root;
+    ListNode *moving = lhead->next, *new_moving = root;
     for (int i = from + 1; i < to; ++i, moving = moving->next) {
         ListNode *node = (ListNode*) malloc(sizeof(ListNode));
         if (node == NULL) {
@@ -148,7 +148,7 @@ List *sublist(List *list, int from, int to)
         node->prev = new_moving;
         node->next = NULL;
         new_moving->next = node;
-        new_list->end = node;
+        new_list->tail = node;
         new_moving = node;
     }
     new_list->size = to - from;
@@ -161,105 +161,105 @@ void link_list(List *list, List *other)
     if (othercopy == NULL)
         return;
     list->size += othercopy->size;
-    if (list->end == NULL)
-        list->start = othercopy->start;
+    if (list->tail == NULL)
+        list->head = othercopy->head;
     else
-        list->end->next = othercopy->start;
-    if (othercopy->start != NULL) {
-        list->start->prev = list->end;
-        list->end = othercopy->end;
+        list->tail->next = othercopy->head;
+    if (othercopy->head != NULL) {
+        list->head->prev = list->tail;
+        list->tail = othercopy->tail;
     }
     free(othercopy);
 }
 
 void reverse_list(List *list)
 {
-    ListNode *moving = list->start, *temp;
+    ListNode *moving = list->head, *temp;
     while (moving != NULL) {
         temp = moving->prev;
         moving->prev = moving->next;
         moving->next = temp;
         moving = moving->prev; /* Actually this is the next... */
     }
-    temp = list->start;
-    list->start = list->end;
-    list->end = temp;
+    temp = list->head;
+    list->head = list->tail;
+    list->tail = temp;
 }
 
-void add_listhead(List *list, int data)
+void push_listfront(List *list, int data)
 {
     ListNode *newNode = (ListNode*) malloc(sizeof(ListNode));
     newNode->data = data;
     newNode->prev = NULL;
-    newNode->next = list->start;
-    if (list->start != NULL)
-        list->start->prev = newNode;
-    list->start = newNode;
-    if (list->end == NULL)
-        list->end = newNode;
+    newNode->next = list->head;
+    if (list->head != NULL)
+        list->head->prev = newNode;
+    list->head = newNode;
+    if (list->tail == NULL)
+        list->tail = newNode;
     ++list->size;
 }
 
-void add_listback(List *list, int data)
+void push_listback(List *list, int data)
 {
     ListNode *newNode = (ListNode*) malloc(sizeof(ListNode));
     newNode->data = data;
-    newNode->prev = list->end;
+    newNode->prev = list->tail;
     newNode->next = NULL;
-    if (list->end == NULL) {
-        list->start = list->end = newNode;
+    if (list->tail == NULL) {
+        list->head = list->tail = newNode;
     } else {
-        list->end->next = newNode;
-        list->end = newNode;
+        list->tail->next = newNode;
+        list->tail = newNode;
     }
     ++list->size;
 }
 
 int pop_listhead(List *list)
 {
-    ListNode *start = list->start;
-    if (start->next != NULL)
-        start->next->prev = NULL;
+    ListNode *head = list->head;
+    if (head->next != NULL)
+        head->next->prev = NULL;
     else
-        list->end = NULL;
-    list->start = start->next;
+        list->tail = NULL;
+    list->head = head->next;
     --list->size;
-    int data = start->data;
-    free(start);
+    int data = head->data;
+    free(head);
     return data;
 }
 
 int pop_listback(List *list)
 {
-    ListNode *end = list->end;
-    if (end->prev != NULL)
-        end->prev->next = NULL;
+    ListNode *tail = list->tail;
+    if (tail->prev != NULL)
+        tail->prev->next = NULL;
     else
-        list->start = NULL;
-    list->end = end->prev;
+        list->head = NULL;
+    list->tail = tail->prev;
     --list->size;
-    int data = end->data;
-    free(end);
+    int data = tail->data;
+    free(tail);
     return data;
 }
 
 int get_listhead(List *list)
 {
-    return list->start->data;
+    return list->head->data;
 }
 
 int get_listback(List *list)
 {
-    return list->end->data;
+    return list->tail->data;
 }
 
 void insert_list(List *list, int index, int data)
 {
     if (index == 0) {
-        add_listhead(list, data);
+        push_listfront(list, data);
     } else {
         int i = 0;
-        ListNode *moving = list->start;
+        ListNode *moving = list->head;
         while (moving != NULL && i < index) {
             moving = moving->next;
             ++i;
@@ -289,7 +289,7 @@ bool isempty_list(List *list)
 
 ListNode *get_listbegin(List *list)
 {
-    return list->start;
+    return list->head;
 }
 
 ListNode *get_listend()
@@ -304,15 +304,15 @@ ListNode *get_listnext(ListNode *node)
 
 void print_list(List *list, FILE *fp)
 {
-    for (ListNode *moving = list->start; moving != NULL; moving = moving->next)
+    for (ListNode *moving = list->head; moving != NULL; moving = moving->next)
         fprintf(fp, "%d ", moving->data);
-    putchar('\n');
 }
 
-int get_listitem(List *list, int index)
+/** Indexing starts from 0 to the "list's size - 1"th element. **/
+int get_listindex(List *list, int index)
 {
     int i = 0;
-    ListNode *moving = list->start;
+    ListNode *moving = list->head;
     while (moving != NULL && i < index) {
         moving = moving->next;
         ++i;
@@ -328,7 +328,7 @@ size_t list_to_array(int **array_ptr, List *list)
         return 0;
     }
     int i = 0;
-    ListNode *moving = list->start;
+    ListNode *moving = list->head;
     while (moving != NULL) {
         array[i++] = moving->data;
         moving = moving->next;
@@ -349,20 +349,20 @@ void remove_listnode(List *list, ListNode *node)
     if (node->prev != NULL)
         node->prev->next = node->next;
     else
-        list->start = node->next;
+        list->head = node->next;
     if (node->next != NULL)
         node->next->prev = node->prev;
     else
-        list->end = node->prev;
+        list->tail = node->prev;
     free(node);
     --list->size;
 }
 
 void remove_listitem(List *list, int data)
 {
-    if (list->start == NULL)
+    if (list->head == NULL)
         return;
-    ListNode *moving = list->start;
+    ListNode *moving = list->head;
     while (moving != NULL && moving->data != data)
         moving = moving->next;
     if (moving->data != data)
@@ -372,13 +372,13 @@ void remove_listitem(List *list, int data)
 
 void clear_list(List *list)
 {
-    ListNode *moving=list->start, *next;
+    ListNode *moving=list->head, *next;
     while (moving != NULL) {
         next = moving->next;
         free(moving);
         moving = next;
     }
-    list->start = list->end = NULL;
+    list->head = list->tail = NULL;
     list->size = 0;
 }
 
