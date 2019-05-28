@@ -292,11 +292,6 @@ ListNode *get_listbegin(List *list)
     return list->head;
 }
 
-ListNode *get_listend()
-{
-    return NULL;
-}
-
 ListNode *get_listnext(ListNode *node)
 {
     return node->next;

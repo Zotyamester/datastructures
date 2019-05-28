@@ -74,7 +74,10 @@ bool isempty_list(List *list);
 ListNode *get_listbegin(List *list);
 
 /**Returns with NULL which is basically the end of the list.**/
-ListNode *get_listend();
+inline ListNode *get_listend()
+{
+    return NULL;
+}
 
 /**Steps one with the iterator. Returns with the next element in the list.**/
 ListNode *get_listnext(ListNode *node);
