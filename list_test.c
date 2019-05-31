@@ -3,16 +3,13 @@
 #include <stdbool.h>
 #include <assert.h>
 
-/* Libs */
 #include "list.h"
-#include "tree.h"
-#include "hashtable.h"
 
 /** Test cases **/
 
 #define CREATE_LIST_TEMPLATE()                  \
             do {                                \
-                list = create_list();     \
+                list = create_list();           \
                 if (list == NULL)               \
                     return false;               \
                 for (int i = 1; i <= 5; ++i)    \
