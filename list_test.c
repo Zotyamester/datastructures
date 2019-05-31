@@ -9,114 +9,114 @@
 
 #define CREATE_LIST_TEMPLATE()                  \
             do {                                \
-                list = create_list();           \
+                list = list_create();           \
                 if (list == NULL)               \
                     return false;               \
                 for (int i = 1; i <= 5; ++i)    \
-                    push_listback(list, i);     \
+                    list_push_back(list, i);     \
             } while(0)
 
 /** Creating and printing **/
-bool testcase1()
+bool list_testcase1()
 {
     printf("---TEST 1.---\n");
 
     List *list;
     CREATE_LIST_TEMPLATE();
 
-    /** Same as --> print_list(list, stdout); **/
-    for (ListNode *iter = get_listbegin(list); iter != get_listend(); iter = get_listnext(iter)) {
+    /** Same as --> list_print(list, stdout); **/
+    for (ListNode *iter = list_get_begin(list); iter != list_get_end(); iter = list_get_next(iter)) {
         printf("%d ", iter->data);
     }
     putchar('\n');
-    print_list(list, stdout);
+    list_print(list, stdout);
 
-    delete_list(list);
+    list_delete(list);
     return true;
 }
 
 /** Copying and reversing **/
-bool testcase2()
+bool list_testcase2()
 {
     printf("---TEST 2.---\n");
 
     List *list;
     CREATE_LIST_TEMPLATE();
 
-    List *copy = copy_list(list);
+    List *copy = list_copy(list);
     if (copy == NULL)
         return false;
 
-    reverse_list(copy);
+    list_reverse(copy);
 
     printf("List:");
-    print_list(list, stdout);
+    list_print(list, stdout);
     printf("\nCopied list:");
-    print_list(copy, stdout);
+    list_print(copy, stdout);
     putchar('\n');
 
-    delete_list(list);
-    delete_list(copy);
+    list_delete(list);
+    list_delete(copy);
     return true;
 }
 
 /** Retrieving elements **/
-bool testcase3()
+bool list_testcase3()
 {
     printf("---TEST 3.---\n");
 
     List *list;
     CREATE_LIST_TEMPLATE();
 
-    printf("%d\n", get_listindex(list, 0));
-    printf("%d\n", get_listindex(list, 3));
-    printf("%d\n", get_listindex(list, 1));
-    printf("%d\n", get_listindex(list, 4));
+    printf("%d\n", list_get_index(list, 0));
+    printf("%d\n", list_get_index(list, 3));
+    printf("%d\n", list_get_index(list, 1));
+    printf("%d\n", list_get_index(list, 4));
 
-    delete_list(list);
+    list_delete(list);
     return true;
 }
 
 /** Popping from back and front **/
-bool testcase4()
+bool list_testcase4()
 {
     printf("---TEST 4.---\n");
 
     List *list;
     CREATE_LIST_TEMPLATE();
 
-    printf("%d\n", pop_listhead(list));
-    printf("%d\n", pop_listhead(list));
-    printf("%d\n", pop_listback(list));
-    printf("%d\n", pop_listback(list));
+    printf("%d\n", list_pop_head(list));
+    printf("%d\n", list_pop_head(list));
+    printf("%d\n", list_pop_back(list));
+    printf("%d\n", list_pop_back(list));
 
-    delete_list(list);
+    list_delete(list);
     return true;
 }
 
-bool testcase5()
+bool list_testcase5()
 {
     printf("---TEST 5.---\n");
 
     List *list;
     CREATE_LIST_TEMPLATE();
 
-    remove_listitem(list, 1);
-    remove_listitem(list, 3);
-    remove_listitem(list, 5);
-    print_list(list, stdout);
+    list_remove_item(list, 1);
+    list_remove_item(list, 3);
+    list_remove_item(list, 5);
+    list_print(list, stdout);
     putchar('\n');
 
-    delete_list(list);
+    list_delete(list);
     return true;
 }
 
 /** Creating from array **/
-bool testcase6()
+bool list_testcase6()
 {
     printf("---TEST 6.---\n");
     int array[5] = {1, 2, 3, 4, 5};
-    List *list = create_list_from_array(array, 5);
+    List *list = list_create_from_array(array, 5);
     if (list == NULL)
         return false;
 
@@ -125,90 +125,90 @@ bool testcase6()
         printf("%d ", array[i]);
 
     printf("\nList:");
-    print_list(list, stdout);
+    list_print(list, stdout);
     putchar('\n');
 
-    delete_list(list);
+    list_delete(list);
     return true;
 }
 
 /** Scanning from input **/
-bool testcase7()
+bool list_testcase7()
 {
     printf("---TEST 7.---\nEnter the values:");
-    List *list = scan_list(stdin);
+    List *list = list_scan(stdin);
     if (list == NULL)
         return false;
 
-    print_list(list, stdout);
+    list_print(list, stdout);
     putchar('\n');
     return true;
 }
 
 /** Iterators **/
-bool testcase8()
+bool list_testcase8()
 {
     printf("---TEST 8.---\n");
 
     List *list;
     CREATE_LIST_TEMPLATE();
 
-    for (ListNode *iter = get_listbegin(list); iter != get_listend(); iter = get_listnext(iter)) {
+    for (ListNode *iter = list_get_begin(list); iter != list_get_end(); iter = list_get_next(iter)) {
         printf("iter->data = %d\n", iter->data);
     }
 
-    delete_list(list);
+    list_delete(list);
     return true;
 }
 
 /** Link lists together **/
-bool testcase9()
+bool list_testcase9()
 {
     printf("---TEST 9.---\n");
-    List *list = create_list(), *list2 = create_list();
+    List *list = list_create(), *list2 = list_create();
     if (list == NULL) {
         if (list2 != NULL)
-            delete_list(list2);
+            list_delete(list2);
         return false;
     } else if (list2 == NULL) {
-        delete_list(list);
+        list_delete(list);
         return false;
     }
     for (int i = 1; i <= 5; ++i)
-        push_listback(list, i);
+        list_push_back(list, i);
     for (int i = 6; i <= 10; ++i)
-        push_listback(list2, i);
+        list_push_back(list2, i);
 
-    link_list(list, list2);
+    list_link(list, list2);
 
-    print_list(list, stdout);
+    list_print(list, stdout);
     putchar('\n');
 
-    delete_list(list);
-    delete_list(list2);
+    list_delete(list);
+    list_delete(list2);
     return true;
 }
 
 /** General test **/
-bool testcase10()
+bool list_testcase10()
 {
     printf("---TEST 10.---\n");
 
     List *list;
     CREATE_LIST_TEMPLATE();
 
-    ListNode *a = get_listbegin(list);
-    ListNode *b = get_listnext(a);
-    int cmp = cmp_listnodes(a, b);
+    ListNode *a = list_get_begin(list);
+    ListNode *b = list_get_next(a);
+    int cmp = list_cmp_nodes(a, b);
     printf("Comparison --> %d %c %d\n", a->data, ((cmp == -1) ? '<' : ((cmp == 0) ? '=' : '>')), b->data);
-    remove_listnode(list, a);
+    list_remove_node(list, a);
 
     printf("List:");
-    print_list(list, stdout);
+    list_print(list, stdout);
     int *array = NULL;
     size_t array_size = list_to_array(&array, list);
     if (array == NULL) {
-        delete_list(list);
+        list_delete(list);
         return false;
     }
     printf("\nArray:");
@@ -217,7 +217,7 @@ bool testcase10()
     putchar('\n');
     free(array);
 
-    delete_list(list);
+    list_delete(list);
     return true;
 }
 
@@ -227,16 +227,16 @@ bool testcase10()
 int main(void)
 {
 
-    assert(testcase1());
-    assert(testcase2());
-    assert(testcase3());
-    assert(testcase4());
-    assert(testcase5());
-    assert(testcase6());
-    assert(testcase7());
-    assert(testcase8());
-    assert(testcase9());
-    assert(testcase10());
+    assert(list_testcase1());
+    assert(list_testcase2());
+    assert(list_testcase3());
+    assert(list_testcase4());
+    assert(list_testcase5());
+    assert(list_testcase6());
+    assert(list_testcase7());
+    assert(list_testcase8());
+    assert(list_testcase9());
+    assert(list_testcase10());
 
     return 0;
 }

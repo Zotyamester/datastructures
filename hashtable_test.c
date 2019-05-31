@@ -7,52 +7,55 @@
 
 /** Test cases **/
 
-bool testcase1()
+bool hashtable_testcase1()
+{
+    printf("---TEST 1.---\n");
+    HashTable *ht = create_hashtable();
+    delete_hashtable(ht);
+    return true;
+}
+
+bool hashtable_testcase2()
 {
 
 }
 
-bool testcase2()
+bool hashtable_testcase3()
 {
 
 }
 
-bool testcase3()
+bool hashtable_testcase4()
 {
 
 }
 
-bool testcase4()
+bool hashtable_testcase5()
 {
 
 }
 
-bool testcase5()
+bool hashtable_testcase6()
 {
 
 }
 
-bool testcase6()
+bool hashtable_testcase7()
 {
 
 }
 
-bool testcase7()
+bool hashtable_testcase8()
 {
 
 }
 
-bool testcase8()
+bool hashtable_testcase9()
 {
 
 }
 
-bool testcase9()
-{
-
-}
-
-bool testcase10()
+bool hashtable_testcase10()
 {
 
 }
@@ -63,16 +66,16 @@ bool testcase10()
 int main(void)
 {
 
-    assert(testcase1());
-    assert(testcase2());
-    assert(testcase3());
-    assert(testcase4());
-    assert(testcase5());
-    assert(testcase6());
-    assert(testcase7());
-    assert(testcase8());
-    assert(testcase9());
-    assert(testcase10());
+    assert(hashtable_testcase1());
+    /*assert(hashtable_testcase2());
+    assert(hashtable_testcase3());
+    assert(hashtable_testcase4());
+    assert(hashtable_testcase5());
+    assert(hashtable_testcase6());
+    assert(hashtable_testcase7());
+    assert(hashtable_testcase8());
+    assert(hashtable_testcase9());
+    assert(hashtable_testcase10());*/
 
     return 0;
 }
