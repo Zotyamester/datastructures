@@ -85,8 +85,8 @@ bool list_testcase4()
     List *list;
     CREATE_LIST_TEMPLATE();
 
-    printf("%d\n", list_pop_head(list));
-    printf("%d\n", list_pop_head(list));
+    printf("%d\n", list_pop_front(list));
+    printf("%d\n", list_pop_front(list));
     printf("%d\n", list_pop_back(list));
     printf("%d\n", list_pop_back(list));
 

@@ -50,13 +50,13 @@ void list_push_front(List *list, int data);
 void list_push_back(List *list, int data);
 
 /**Retrieves and deletes the first value (if it exists) of the list.**/
-int list_pop_head(List *list);
+int list_pop_front(List *list);
 
 /**Retrieves and deletes the last value (if it exists) of the list.**/
 int list_pop_back(List *list);
 
 /**Retrieves the first value (if it exists) of the list.**/
-int list_get_head(List *list);
+int list_get_front(List *list);
 
 /**Retrieves the last value (if it exists) of the list.**/
 int list_get_back(List *list);

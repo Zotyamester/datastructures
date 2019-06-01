@@ -215,7 +215,7 @@ void list_push_back(List *list, int data)
     ++list->size;
 }
 
-int list_pop_head(List *list)
+int list_pop_front(List *list)
 {
     ListNode *head = list->head;
     if (head->next != NULL)
@@ -243,7 +243,7 @@ int list_pop_back(List *list)
     return data;
 }
 
-int list_get_head(List *list)
+int list_get_front(List *list)
 {
     return list->head->data;
 }
