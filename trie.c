@@ -1,10 +1,9 @@
 #include "trie.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 typedef struct TrieNode {
     struct {
-        bool is_word;
+        bool is_valid;
         struct TrieNode *link;
     } data[26];
 } TrieNode;
@@ -21,10 +20,6 @@ Trie *trie_create()
     trie->root = NULL;
     return trie;
 }
-Trie *trie_create_from_strings(const char **strs)
-{
-    /** TODO! **/
-}
 static TrieNode *trie_insert_node(TrieNode *node, const char *str)
 {
     if (*str == '\0') return node;
@@ -37,23 +32,33 @@ static TrieNode *trie_insert_node(TrieNode *node, const char *str)
             node->data[i].link = NULL;
             if (i == index) {
                 if (str[1] == '\0') {
-                    node->data[i].is_word = true;
+                    node->data[i].is_valid = true;
                 } else {
-                    node->data[i].is_word = false;
+                    node->data[i].is_valid = false;
                     node->data[i].link = trie_insert_node(node->data[i].link, str + 1);
                 }
             } else {
-                node->data[i].is_word = false;
+                node->data[i].is_valid = false;
             }
         }
         return node;
     } else {
         if (str[1] == '\0')
-            node->data[index].is_word = true;
+            node->data[index].is_valid = true;
         else
             node->data[index].link = trie_insert_node(node->data[index].link,  str + 1);
         return node;
     }
+}
+Trie *trie_create_from_strings(const char **strs, size_t size)
+{
+    Trie *trie = trie_create();
+    if (trie == NULL)
+        return NULL;
+    for (int i = 0; i < size; ++i) {
+        trie_insert_node(trie->root, strs[i]);
+    }
+    return trie;
 }
 void trie_insert(Trie *trie, const char *str)
 {
@@ -69,7 +74,7 @@ static bool trie_match(TrieNode *root, const char *str)
     int index = (*str) - 'A';
 
     if (str[1] == '\0') {
-        if (root->data[index].is_word)
+        if (root->data[index].is_valid)
             return true;
     } else {
         return trie_match(root->data[index].link, str + 1);
