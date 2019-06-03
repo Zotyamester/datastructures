@@ -30,25 +30,14 @@ static TrieNode *trie_insert_node(TrieNode *node, const char *str)
             return NULL;
         for (int i = 0; i < 26; ++i) {
             node->data[i].link = NULL;
-            if (i == index) {
-                if (str[1] == '\0') {
-                    node->data[i].is_valid = true;
-                } else {
-                    node->data[i].is_valid = false;
-                    node->data[i].link = trie_insert_node(node->data[i].link, str + 1);
-                }
-            } else {
-                node->data[i].is_valid = false;
-            }
+            node->data[i].is_valid = false;
         }
-        return node;
-    } else {
-        if (str[1] == '\0')
-            node->data[index].is_valid = true;
-        else
-            node->data[index].link = trie_insert_node(node->data[index].link,  str + 1);
-        return node;
     }
+    if (str[1] == '\0')
+        node->data[index].is_valid = true;
+    else
+        node->data[index].link = trie_insert_node(node->data[index].link,  str + 1);
+    return node;
 }
 Trie *trie_create_from_strings(const char **strs, size_t size)
 {
@@ -74,8 +63,7 @@ static bool trie_match(TrieNode *root, const char *str)
     int index = (*str) - 'A';
 
     if (str[1] == '\0') {
-        if (root->data[index].is_valid)
-            return true;
+        return root->data[index].is_valid;
     } else {
         return trie_match(root->data[index].link, str + 1);
     }
