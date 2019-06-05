@@ -18,7 +18,7 @@ int main(void)
         printf("%s is %s\n", buf, (trie_search(trie, buf) == true) ? "valid":"invalid");
     }
     puts("---PRINT---");
-    trie_print(trie);
+    trie_print(trie, stdout);
     trie_delete(trie);
 
     return 0;

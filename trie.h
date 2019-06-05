@@ -31,4 +31,4 @@ void trie_print(Trie *trie, FILE *fp);
 /** Deletes and frees the dynamically allocated Trie and its nodes. **/
 void trie_delete(Trie *trie);
 
-#endif // TRIE_H
+#endif /* TRIE_H */

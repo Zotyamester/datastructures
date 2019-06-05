@@ -94,10 +94,10 @@ static void trie_print_valids(TrieNode *root, char *pprefix, FILE *fp)
     for (int i = 0; i < 26; ++i) {
         c = 'A' + i;
         if (root->data[i].is_valid) {
-            fprintf(fp, "%s%c\n", pprefix);
+            fprintf(fp, "%s%c\n", pprefix, c);
         }
         nprefix[len] = c;
-        trie_print_valids(root->data[i].link, nprefix);
+        trie_print_valids(root->data[i].link, nprefix, fp);
     }
     free(nprefix);
 }
