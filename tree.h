@@ -11,7 +11,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-/*#include "debugmalloc.h"*/
 
 typedef struct TreeNode {
     int val;
