@@ -1,5 +1,6 @@
 #include "trie.h"
 #include <stdio.h>
+#include <string.h>
 
 typedef struct TrieNode {
     struct {
@@ -71,6 +72,31 @@ static bool trie_match(TrieNode *root, const char *str)
 bool trie_search(Trie *trie, const char *str)
 {
     return trie_match(trie->root, str);
+}
+static void trie_print_valids(TrieNode *root, char *pprefix)
+{
+    if (root == NULL)
+        return;
+    char c;
+    size_t len = strlen(pprefix);
+    char *nprefix = (char*) malloc((len + 2) * sizeof(char));
+    if (nprefix == NULL)
+        return;
+    strncpy(nprefix, pprefix, len);
+    nprefix[len + 1] = '\0';
+    for (int i = 0; i < 26; ++i) {
+        c = 'A' + i;
+        if (root->data[i].is_valid) {
+            printf("%s%c\n", pprefix, c);
+        }
+        nprefix[len] = c;
+        trie_print_valids(root->data[i].link, nprefix);
+    }
+    free(nprefix);
+}
+void trie_print(Trie *trie)
+{
+    trie_print_valids(trie->root, "");
 }
 static void trie_free_nodes(TrieNode *root)
 {
