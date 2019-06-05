@@ -13,7 +13,7 @@
                 if (list == NULL)               \
                     return false;               \
                 for (int i = 1; i <= 5; ++i)    \
-                    list_push_back(list, i);     \
+                    list_push_back(list, i);    \
             } while(0)
 
 /** Creating and printing **/
