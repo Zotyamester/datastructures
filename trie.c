@@ -108,7 +108,7 @@ void trie_print(Trie *trie, FILE *fp)
 static void trie_free_nodes(TrieNode *root)
 {
     if (root == NULL)
-        return NULL;
+        return;
     for (int i = 0; i < 26; ++i) {
         trie_free_nodes(root->data[i].link);
     }
