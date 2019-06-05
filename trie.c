@@ -1,5 +1,12 @@
+/**
+ * \file trie.c
+ *
+ * This file defines the declarations and struct Trie and TrieNode from 'trie.h'.
+ * @author Zoltan Szatmary
+ *
+ **/
+
 #include "trie.h"
-#include <stdio.h>
 #include <string.h>
 
 typedef struct TrieNode {
@@ -73,7 +80,7 @@ bool trie_search(Trie *trie, const char *str)
 {
     return trie_match(trie->root, str);
 }
-static void trie_print_valids(TrieNode *root, char *pprefix)
+static void trie_print_valids(TrieNode *root, char *pprefix, FILE *fp)
 {
     if (root == NULL)
         return;
@@ -87,16 +94,16 @@ static void trie_print_valids(TrieNode *root, char *pprefix)
     for (int i = 0; i < 26; ++i) {
         c = 'A' + i;
         if (root->data[i].is_valid) {
-            printf("%s%c\n", pprefix, c);
+            fprintf(fp, "%s%c\n", pprefix);
         }
         nprefix[len] = c;
         trie_print_valids(root->data[i].link, nprefix);
     }
     free(nprefix);
 }
-void trie_print(Trie *trie)
+void trie_print(Trie *trie, FILE *fp)
 {
-    trie_print_valids(trie->root, "");
+    trie_print_valids(trie->root, "", fp);
 }
 static void trie_free_nodes(TrieNode *root)
 {
