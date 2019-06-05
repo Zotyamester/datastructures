@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-/*#include "debugmalloc.h"*/
 
 typedef struct ListNode {
     int data;
@@ -25,7 +24,7 @@ typedef struct List List;
 /**Dynamically allocates a List (aka struct List).**/
 List *list_create();
 
-/**Dynamically allocates a List (with 'create_list()') and initializes it with the given array.**/
+/**Dynamically allocates a List (with 'list_create()') and initializes it with the given array.**/
 List *list_create_from_array(int *array, size_t size);
 
 /**Scans for a list of data in the given in and makes a list.**/
@@ -103,7 +102,7 @@ void list_remove_item(List *list, int data);
 /**Frees the nodes in the list and resets size.**/
 void list_clear(List *list);
 
-/**Calls 'clear_list(List *list)' and frees the dynamically allocated struct.**/
+/**Calls 'list_clear(List *list)' and frees the dynamically allocated struct.**/
 void list_delete(List *list);
 
 
