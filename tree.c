@@ -45,7 +45,8 @@ void print_tree(Tree *tree, FILE *out) {
 }
 
 static void free_nodes(TreeNode *root) {
-    if(root == NULL) return;
+    if (root == NULL)
+        return;
 
     free_nodes(root->left);
     free_nodes(root->right);
