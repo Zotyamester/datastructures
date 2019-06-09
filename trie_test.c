@@ -16,7 +16,7 @@ void f1()
     fclose(fp);
     puts("---SEARCH---");
     gets(buf);
-    while (strcmp(gets, "q") != 0) {
+    while (strcmp(buf, "q") != 0) {
         clock_t begin = clock();
         printf("%s is %s\n", buf, (trie_search(trie, buf) == true) ? "valid":"invalid");
         clock_t end = clock();
@@ -38,7 +38,7 @@ void f2()
     fclose(fp);
     puts("---SEARCH---");
     gets(buf);
-    while (strcmp(gets, "q") != 0) {
+    while (strcmp(buf, "q") != 0) {
         clock_t begin = clock();
         bool found = false;
         for (int i = 0; i < n; ++i) {
@@ -60,7 +60,7 @@ void f2()
 int main(void)
 {
 
-    //f1();
+    f1();
     //f2();
 
     return 0;

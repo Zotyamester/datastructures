@@ -37,8 +37,8 @@ static TrieNode *trie_insert_node(TrieNode *node, const char *str)
         if (node == NULL)
             return NULL;
         for (int i = 0; i < 26; ++i) {
-            node->data[i].link = NULL;
             node->data[i].is_valid = false;
+            node->data[i].link = NULL;
         }
     }
     if (str[1] == '\0')
@@ -53,7 +53,7 @@ Trie *trie_create_from_strings(const char **strs, size_t size)
     if (trie == NULL)
         return NULL;
     for (int i = 0; i < size; ++i) {
-        trie_insert_node(trie->root, strs[i]);
+        trie->root = trie_insert_node(trie->root, strs[i]);
     }
     return trie;
 }
