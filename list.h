@@ -84,14 +84,11 @@ ListNode *list_get_next(ListNode *node);
 /**Prints the list to the give out separated by spaces (without an ending '\n').**/
 void list_print(List *list, FILE *fp);
 
-/**Gets the item form the given position (index from 0 to the (size - 1)th) of the list.**/
-int list_get_index(List *list, int index);
+/**Gets the (pointer to it) item form the given position (index from 0 to the (size - 1)th) of the list.**/
+int *list_get_index(List *list, int index);
 
 /**Allocates an array based on the elements of the list.**/
 size_t list_to_array(int **array_ptr, List *list);
-
-/**Compares two nodes in the 'standard way': a < b = -1   a == b = 0   a > b = 1**/
-int list_cmp_nodes(ListNode *a, ListNode *b);
 
 /**Removes and frees the given node.**/
 void list_remove_node(List *list, ListNode *node);

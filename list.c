@@ -304,7 +304,7 @@ void list_print(List *list, FILE *fp)
 }
 
 /** Indexing starts from 0 to the "list's size - 1"th element. **/
-int list_get_index(List *list, int index)
+int *list_get_index(List *list, int index)
 {
     int i = 0;
     ListNode *moving = list->head;
@@ -312,7 +312,7 @@ int list_get_index(List *list, int index)
         moving = moving->next;
         ++i;
     }
-    return moving->data;
+    return &moving->data;
 }
 
 size_t list_to_array(int **array_ptr, List *list)
@@ -330,13 +330,6 @@ size_t list_to_array(int **array_ptr, List *list)
     }
     *array_ptr = array;
     return list->size;
-}
-
-int list_cmp_nodes(ListNode *a, ListNode *b)
-{
-    if (a->data < b->data)
-        return -1;
-    return a->data > b->data;
 }
 
 void list_remove_node(List *list, ListNode *node)
