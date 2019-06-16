@@ -34,7 +34,7 @@ List *list_scan(FILE *fp);
 List *list_copy(List *list);
 
 /**Makes a sublist of the given list. The sublist will be a from left-closed, from right-open interval.**/
-List *list_sub(List *list, int from, int to);
+List *list_sub(List *list, size_t from, size_t to);
 
 /**Links a list to another.**/
 void list_link(List *list, List *other);
@@ -48,11 +48,11 @@ void list_push_front(List *list, int data);
 /**Adds a new node to the back of the list.**/
 void list_push_back(List *list, int data);
 
-/**Retrieves and deletes the first value (if it exists) of the list.**/
-int list_pop_front(List *list);
+/**Deletes the first value (if it exists) of the list.**/
+void list_pop_front(List *list);
 
-/**Retrieves and deletes the last value (if it exists) of the list.**/
-int list_pop_back(List *list);
+/**Deletes the last value (if it exists) of the list.**/
+void list_pop_back(List *list);
 
 /**Retrieves the first value (if it exists) of the list.**/
 int list_get_front(List *list);
@@ -61,7 +61,7 @@ int list_get_front(List *list);
 int list_get_back(List *list);
 
 /**Inserts a node to the given position (index from 0) of the list.**/
-void list_insert(List *list, int index, int data);
+void list_insert(List *list, size_t index, int data);
 
 /**Returns the size of the list. It runs in O(1) since it always keeps track of the size.**/
 size_t list_get_size(List *list);
@@ -85,7 +85,7 @@ ListNode *list_get_next(ListNode *node);
 void list_print(List *list, FILE *fp);
 
 /**Gets the (pointer to it) item form the given position (index from 0 to the (size - 1)th) of the list.**/
-int *list_get_index(List *list, int index);
+int *list_get_index(List *list, size_t index);
 
 /**Allocates an array based on the elements of the list.**/
 size_t list_to_array(int **array_ptr, List *list);

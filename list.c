@@ -37,7 +37,7 @@ List *list_create_from_array(int *array, size_t size)
     root->prev = root->next = NULL;
     list->head = list->tail = root;
     ListNode *moving = root;
-    for (int i = 1; i < size; ++i) {
+    for (size_t i = 1; i < size; ++i) {
         ListNode *node = (ListNode*) malloc(sizeof(ListNode));
         if (node == NULL) {
             list->tail = moving;
@@ -122,7 +122,7 @@ List *list_copy(List *list)
     return copy;
 }
 
-List *list_sub(List *list, int from, int to)
+List *list_sub(List *list, size_t from, size_t to)
 {
     List *new_list = list_create();
     if (new_list == NULL)
@@ -130,7 +130,7 @@ List *list_sub(List *list, int from, int to)
     if (list->head == NULL)
         return new_list;
     ListNode *lhead = list->head;
-    for (int i = 0; i < from; ++i, lhead = lhead->next);
+    for (size_t i = 0; i < from; ++i, lhead = lhead->next);
     ListNode *root = (ListNode*) malloc(sizeof(ListNode));
     if (root == NULL)
         return new_list;
@@ -138,7 +138,7 @@ List *list_sub(List *list, int from, int to)
     root->prev = root->next = NULL;
     new_list->head = root;
     ListNode *moving = lhead->next, *new_moving = root;
-    for (int i = from + 1; i < to; ++i, moving = moving->next) {
+    for (size_t i = from + 1; i < to; ++i, moving = moving->next) {
         ListNode *node = (ListNode*) malloc(sizeof(ListNode));
         if (node == NULL) {
             new_list->size = i - from;
@@ -215,7 +215,7 @@ void list_push_back(List *list, int data)
     ++list->size;
 }
 
-int list_pop_front(List *list)
+void list_pop_front(List *list)
 {
     ListNode *head = list->head;
     if (head->next != NULL)
@@ -226,10 +226,9 @@ int list_pop_front(List *list)
     --list->size;
     int data = head->data;
     free(head);
-    return data;
 }
 
-int list_pop_back(List *list)
+void list_pop_back(List *list)
 {
     ListNode *tail = list->tail;
     if (tail->prev != NULL)
@@ -240,7 +239,6 @@ int list_pop_back(List *list)
     --list->size;
     int data = tail->data;
     free(tail);
-    return data;
 }
 
 int list_get_front(List *list)
@@ -253,12 +251,12 @@ int list_get_back(List *list)
     return list->tail->data;
 }
 
-void list_insert(List *list, int index, int data)
+void list_insert(List *list, size_t index, int data)
 {
     if (index == 0) {
         list_push_front(list, data);
     } else {
-        int i = 0;
+        size_t i = 0;
         ListNode *moving = list->head;
         while (moving != NULL && i < index) {
             moving = moving->next;
@@ -304,9 +302,9 @@ void list_print(List *list, FILE *fp)
 }
 
 /** Indexing starts from 0 to the "list's size - 1"th element. **/
-int *list_get_index(List *list, int index)
+int *list_get_index(List *list, size_t index)
 {
-    int i = 0;
+    size_t i = 0;
     ListNode *moving = list->head;
     while (moving != NULL && i < index) {
         moving = moving->next;
@@ -322,7 +320,7 @@ size_t list_to_array(int **array_ptr, List *list)
         *array_ptr = NULL;
         return 0;
     }
-    int i = 0;
+    size_t i = 0;
     ListNode *moving = list->head;
     while (moving != NULL) {
         array[i++] = moving->data;
