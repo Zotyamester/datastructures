@@ -1,3 +1,11 @@
+/**
+ * \file vector.c
+ *
+ * This file defines the declarations and struct Vector from 'vector.h'.
+ * @author Zoltan Szatmary
+ *
+ **/
+
 #include "vector.h"
 #include <string.h>
 

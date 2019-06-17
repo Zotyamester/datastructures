@@ -1,3 +1,12 @@
+/**
+ * \file vector.h
+ *
+ * This file contains the declarations of vector-related functions.
+ * The vector is a dynamic array.
+ * @author Zoltan Szatmary
+ *
+ **/
+
 #ifndef VECTOR_H
 #define VECTOR_H
 
