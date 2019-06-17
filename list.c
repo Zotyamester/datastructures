@@ -224,7 +224,6 @@ void list_pop_front(List *list)
         list->tail = NULL;
     list->head = head->next;
     --list->size;
-    int data = head->data;
     free(head);
 }
 
@@ -237,7 +236,6 @@ void list_pop_back(List *list)
         list->head = NULL;
     list->tail = tail->prev;
     --list->size;
-    int data = tail->data;
     free(tail);
 }
 
@@ -372,5 +370,4 @@ void list_delete(List *list)
 {
     list_clear(list);
     free(list);
-    list = NULL;
 }

@@ -62,13 +62,13 @@ Vector *vector_copy(Vector *vector)
     memcpy(new_vector->data, vector->data, vector->size * sizeof(int));
     return new_vector;
 }
-Vector *vector_sub(Vector *vector, int from, int to)
+Vector *vector_sub(Vector *vector, size_t from, size_t to)
 {
     size_t size = to - from;
     Vector *new_vector = vector_create_with_size(vector->size);
     if (new_vector == NULL)
         return NULL;
-    for (int i = 0; i < size; ++i)
+    for (size_t i = 0; i < size; ++i)
         new_vector->data[i] = vector->data[from + i];
     return new_vector;
 }
@@ -88,13 +88,13 @@ bool vector_is_empty(Vector *vector)
 void vector_reverse(Vector *vector)
 {
     size_t n = vector->size / 2;
-    for (int i = 0; i < n; ++i) {
+    for (size_t i = 0; i < n; ++i) {
         int temp = vector->data[i];
         vector->data[i] = vector->data[vector->size - 1 - i];
         vector->data[vector->size - 1 -i] = temp;
     }
 }
-void vector_insert(Vector *vector, int index, int data)
+void vector_insert(Vector *vector, size_t index, int data)
 {
     if (vector->size + 1 == vector->capacity) {
         size_t capacity = vector->capacity * 2;
@@ -105,7 +105,7 @@ void vector_insert(Vector *vector, int index, int data)
         free(vector->data);
         vector->data = arr;
     }
-    for (int i = vector->size; i > index; --i)
+    for (size_t i = vector->size; i > index; --i)
         vector->data[i] = vector->data[i - 1];
     vector->data[index] = data;
     ++vector->size;
@@ -121,7 +121,7 @@ void vector_push_front(Vector *vector, int data)
         free(vector->data);
         vector->data = arr;
     }
-    for (int i = vector->size; i > 0; --i)
+    for (size_t i = vector->size; i > 0; --i)
         vector->data[i] = vector->data[i - 1];
     vector->data[0] = data;
     ++vector->size;
@@ -142,7 +142,7 @@ void vector_push_back(Vector *vector, int data)
 void vector_pop_front(Vector *vector)
 {
     size_t end = vector->size - 1;
-    for (int i = 0; i < end; ++i)
+    for (size_t i = 0; i < end; ++i)
         vector[i] = vector[i + 1];
     --vector->size;
 }
@@ -158,13 +158,13 @@ int vector_get_back(Vector *vector)
 {
     return vector->data[vector->size - 1];
 }
-int *vector_get_index(Vector *vector, int index)
+int *vector_get_index(Vector *vector, size_t index)
 {
     return &vector->data[index];
 }
 void vector_print(Vector *vector, FILE *fp)
 {
-    for (int i = 0; i < vector->size; ++i)
+    for (size_t i = 0; i < vector->size; ++i)
         fprintf(fp, "%d ", vector->data[i]);
 }
 void vector_clear(Vector *vector)

@@ -84,7 +84,7 @@ static void free_bucket(Bucket *b)
 
 void delete_hashtable(HashTable *htable)
 {
-    for (int i = 0; i < HASH_SIZE; ++i) {
+    for (size_t i = 0; i < HASH_SIZE; ++i) {
         if (htable->data[i] != NULL) free_bucket(htable->data[i]);
     }
     free(htable);
