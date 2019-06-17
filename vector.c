@@ -110,6 +110,7 @@ void vector_insert(Vector *vector, size_t index, int data)
         if (arr == NULL)
             return;
         vector->capacity = capacity;
+        memcpy(arr, vector->data, vector->size * sizeof(int));
         free(vector->data);
         vector->data = arr;
     }
@@ -126,6 +127,7 @@ void vector_push_front(Vector *vector, int data)
         if (arr == NULL)
             return;
         vector->capacity = capacity;
+        memcpy(arr, vector->data, vector->size * sizeof(int));
         free(vector->data);
         vector->data = arr;
     }
@@ -142,6 +144,7 @@ void vector_push_back(Vector *vector, int data)
         if (arr == NULL)
             return;
         vector->capacity = capacity;
+        memcpy(arr, vector->data, vector->size * sizeof(int));
         free(vector->data);
         vector->data = arr;
     }
