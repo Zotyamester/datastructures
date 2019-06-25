@@ -239,12 +239,12 @@ void list_pop_back(List *list)
     free(tail);
 }
 
-int list_get_front(List *list)
+int list_front(List *list)
 {
     return list->head->data;
 }
 
-int list_get_back(List *list)
+int list_back(List *list)
 {
     return list->tail->data;
 }
@@ -273,12 +273,12 @@ void list_insert(List *list, size_t index, int data)
     }
 }
 
-size_t list_get_size(List *list)
+size_t list_size(List *list)
 {
     return list->size;
 }
 
-bool list_is_empty(List *list)
+bool list_empty(List *list)
 {
     return list->size == 0;
 }
@@ -300,7 +300,7 @@ void list_print(List *list, FILE *fp)
 }
 
 /** Indexing starts from 0 to the "list's size - 1"th element. **/
-int *list_get_index(List *list, size_t index)
+int *list_get(List *list, size_t index)
 {
     size_t i = 0;
     ListNode *moving = list->head;

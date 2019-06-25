@@ -48,26 +48,26 @@ void list_push_front(List *list, int data);
 /**Adds a new node to the back of the list.**/
 void list_push_back(List *list, int data);
 
-/**Deletes the first value (if it exists) of the list.**/
+/**Deletes the first value of the list.**/
 void list_pop_front(List *list);
 
-/**Deletes the last value (if it exists) of the list.**/
+/**Deletes the last value of the list.**/
 void list_pop_back(List *list);
 
-/**Retrieves the first value (if it exists) of the list.**/
-int list_get_front(List *list);
+/**Retrieves the first value of the list.**/
+int list_front(List *list);
 
-/**Retrieves the last value (if it exists) of the list.**/
-int list_get_back(List *list);
+/**Retrieves the last value of the list.**/
+int list_back(List *list);
 
 /**Inserts a node to the given position (index from 0) of the list.**/
 void list_insert(List *list, size_t index, int data);
 
 /**Returns the size of the list. It runs in O(1) since it always keeps track of the size.**/
-size_t list_get_size(List *list);
+size_t list_size(List *list);
 
 /**Returns with a bool indicating whether the list is empty or not.**/
-bool list_is_empty(List *list);
+bool list_empty(List *list);
 
 /**Returns an 'iterator' (ListNode*).**/
 ListNode *list_get_begin(List *list);
@@ -85,7 +85,7 @@ ListNode *list_get_next(ListNode *node);
 void list_print(List *list, FILE *fp);
 
 /**Gets the (pointer to it) item form the given position (index from 0 to the (size - 1)th) of the list.**/
-int *list_get_index(List *list, size_t index);
+int *list_get(List *list, size_t index);
 
 /**Allocates an array based on the elements of the list.**/
 size_t list_to_array(int **array_ptr, List *list);
