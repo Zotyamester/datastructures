@@ -85,11 +85,11 @@ void vector_link(Vector *vector, Vector *other)
     if (vector_resize(vector, vector->size + other->size))
         memcpy(vector->data + vector->size, other->data, other->size * sizeof(int));
 }
-size_t vector_get_size(Vector *vector)
+size_t vector_size(Vector *vector)
 {
     return vector->size;
 }
-bool vector_is_empty(Vector *vector)
+bool vector_empty(Vector *vector)
 {
     return vector->size == 0;
 }
@@ -161,15 +161,15 @@ void vector_pop_back(Vector *vector)
 {
     --vector->size;
 }
-int vector_get_front(Vector *vector)
+int vector_front(Vector *vector)
 {
     return vector->data[0];
 }
-int vector_get_back(Vector *vector)
+int vector_back(Vector *vector)
 {
     return vector->data[vector->size - 1];
 }
-int *vector_get_index(Vector *vector, size_t index)
+int *vector_get(Vector *vector, size_t index)
 {
     return &vector->data[index];
 }
