@@ -283,12 +283,12 @@ bool list_empty(List *list)
     return list->size == 0;
 }
 
-ListNode *list_get_begin(List *list)
+ListNode *list_begin(List *list)
 {
     return list->head;
 }
 
-ListNode *list_get_next(ListNode *node)
+ListNode *list_next(ListNode *node)
 {
     return node->next;
 }

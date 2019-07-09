@@ -70,16 +70,16 @@ size_t list_size(List *list);
 bool list_empty(List *list);
 
 /** Returns an 'iterator' (ListNode*). */
-ListNode *list_get_begin(List *list);
+ListNode *list_begin(List *list);
 
 /** Returns with NULL which is basically the end of the list. */
-inline ListNode *list_get_end()
+inline ListNode *list_end()
 {
     return NULL;
 }
 
 /** Steps one with the iterator. Returns with the next element in the list. */
-ListNode *list_get_next(ListNode *node);
+ListNode *list_next(ListNode *node);
 
 /** Prints the list to the give out separated by spaces (without an ending '\n'). */
 void list_print(List *list, FILE *fp);
