@@ -4,7 +4,7 @@
  * This file defines the declarations and struct Vector from 'vector.h'.
  * @author Zoltan Szatmary
  *
- **/
+ */
 
 #include "vector.h"
 #include <string.h>
@@ -215,7 +215,7 @@ size_t vector_to_array(Vector *vector, int **array_ptr)
     memcpy(array, vector->data, vector->size * sizeof(int));
     return vector->size;
 }
-void vector_delete(Vector *vector)
+void vector_destroy(Vector *vector)
 {
     free(vector->data);
     free(vector);

@@ -4,7 +4,7 @@
  * This file defines the declarations and struct List from 'list.h'.
  * @author Zoltan Szatmary
  *
- **/
+ */
 
 #include "list.h"
 
@@ -179,7 +179,7 @@ void list_reverse(List *list)
         temp = moving->prev;
         moving->prev = moving->next;
         moving->next = temp;
-        moving = moving->prev; /* Actually this is the next... */
+        moving = moving->prev; /* Actually this is the next...  */
     }
     temp = list->head;
     list->head = list->tail;
@@ -299,7 +299,7 @@ void list_print(List *list, FILE *fp)
         fprintf(fp, "%d ", moving->data);
 }
 
-/** Indexing starts from 0 to the "list's size - 1"th element. **/
+/** Indexing starts from 0 to the "list's size - 1"th element. */
 int *list_get(List *list, size_t index)
 {
     size_t i = 0;
@@ -366,7 +366,7 @@ void list_clear(List *list)
     list->size = 0;
 }
 
-void list_delete(List *list)
+void list_destroy(List *list)
 {
     list_clear(list);
     free(list);

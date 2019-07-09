@@ -4,7 +4,7 @@
  * This file defines the declarations and struct HashTable from 'hashtable.h'.
  * @author Zoltan Szatmary
  *
- **/
+ */
 
 #include "hashtable.h"
 
@@ -13,7 +13,7 @@ struct HashTable {
     size_t size;
 };
 
-HashTable *create_hashtable()
+HashTable *hashtable_create()
 {
     HashTable *htable = (HashTable*) malloc(sizeof(HashTable));
     if (htable == NULL)
@@ -23,11 +23,11 @@ HashTable *create_hashtable()
     return htable;
 }
 
-static int hash_int(int key) {
+static int hashtable_hash_int(int key) {
     return key % HASH_SIZE;
 }
 
-void set_hashtable_h(HashTable *htable, int key, int val, int (*hash_f)(int))
+void hashtable_set_h(HashTable *htable, int key, int val, int (*hash_f)(int))
 {
     int hash = hash_f(key);
     Bucket *b = htable->data[hash];
@@ -56,14 +56,14 @@ void set_hashtable_h(HashTable *htable, int key, int val, int (*hash_f)(int))
     }
 }
 
-void set_hashtable(HashTable *htable, int key, int val)
+void hashtable_set(HashTable *htable, int key, int val)
 {
-    set_hashtable_h(htable, key, val, hash_int);
+    hashtable_set_h(htable, key, val, hashtable_hash_int);
 }
 
-int *get_hashtableitem(HashTable *htable, int key)
+int *hashtable_get(HashTable *htable, int key)
 {
-    int hash = hash_int(key);
+    int hash = hashtable_hash_int(key);
     Bucket *b = htable->data[hash];
     for (Bucket *moving = b; moving != NULL; moving = moving->next) {
         if (moving->key == key)
@@ -72,7 +72,7 @@ int *get_hashtableitem(HashTable *htable, int key)
     return NULL;
 }
 
-static void free_bucket(Bucket *b)
+static void hashtable_free_bucket(Bucket *b)
 {
     Bucket *moving = b, *next;
     while (moving != NULL) {
@@ -82,10 +82,10 @@ static void free_bucket(Bucket *b)
     }
 }
 
-void delete_hashtable(HashTable *htable)
+void hashtable_destroy(HashTable *htable)
 {
     for (size_t i = 0; i < HASH_SIZE; ++i) {
-        if (htable->data[i] != NULL) free_bucket(htable->data[i]);
+        if (htable->data[i] != NULL) hashtable_free_bucket(htable->data[i]);
     }
     free(htable);
 }

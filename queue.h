@@ -6,12 +6,12 @@
  * (By default its implementations is a vector.)
  * @author Zoltan Szatmary
  *
- **/
+  */
 
 #ifndef QUEUE_H
 #define QUEUE_H
 
-/** If the 'LIST_QUEUE' macro is defined, then it's going to be a list. **/
+/** If the 'LIST_QUEUE' macro is defined, then it's going to be a list. */
 #ifdef LIST_QUEUE
 #include "list.h"
 typedef List Queue;
@@ -84,12 +84,12 @@ inline void queue_clear(Queue *queue)
     vector_clear(queue);
 #endif
 }
-inline void queue_delete(Queue *queue)
+inline void queue_destroy(Queue *queue)
 {
 #ifdef LIST_QUEUE
-    list_delete(queue);
+    list_destroy(queue);
 #else
-    vector_delete(queue);
+    vector_destroy(queue);
 #endif
 }
 

@@ -5,7 +5,7 @@
  * The vector is a dynamic array.
  * @author Zoltan Szatmary
  *
- **/
+ */
 
 #ifndef VECTOR_H
 #define VECTOR_H
@@ -40,6 +40,6 @@ void vector_print(Vector *vector, FILE *fp);
 void vector_clear(Vector *vector);
 bool vector_resize(Vector *vector, size_t size);
 size_t vector_to_array(Vector *vector, int **array_ptr);
-void vector_delete(Vector *vector);
+void vector_destroy(Vector *vector);
 
 #endif /* VECTOR_H */

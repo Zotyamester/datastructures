@@ -4,14 +4,14 @@ struct Tree {
     TreeNode *root;
 };
 
-Tree *create_tree() {
+Tree *tree_create() {
     Tree *tree = (Tree*) malloc(sizeof(Tree));
     if(tree == NULL) return NULL;
     tree->root = NULL;
     return tree;
 }
 
-static TreeNode *insert_node(TreeNode *root, TreeNode *parent, int val) {
+static TreeNode *tree_insert_node(TreeNode *root, TreeNode *parent, int val) {
     if(root == NULL) {
         root = (TreeNode*) malloc(sizeof(TreeNode));
         if(root == NULL) return NULL;
@@ -20,45 +20,45 @@ static TreeNode *insert_node(TreeNode *root, TreeNode *parent, int val) {
         root->val = val;
     } else {
         if(val < root->val) {
-            root->left = insert_node(root->left, root, val);
+            root->left = tree_insert_node(root->left, root, val);
         } else if(val > root->val) {
-            root->right = insert_node(root->right, root, val);
+            root->right = tree_insert_node(root->right, root, val);
         }
     }
     return root;
 }
 
-void insert_tree(Tree *tree, int val) {
-    tree->root = insert_node(tree->root, NULL, val);
+void tree_insert(Tree *tree, int val) {
+    tree->root = tree_insert_node(tree->root, NULL, val);
 }
 
-static void print_nodes(TreeNode *root, FILE *out) {
+static void tree_print_nodes(TreeNode *root, FILE *out) {
     if(root == NULL) return;
 
-    print_nodes(root->left, out);
+    tree_print_nodes(root->left, out);
     fprintf(out, "%d ", root->val);
-    print_nodes(root->right, out);
+    tree_print_nodes(root->right, out);
 }
 
-void print_tree(Tree *tree, FILE *out) {
-    print_nodes(tree->root, out);
+void tree_print(Tree *tree, FILE *out) {
+    tree_print_nodes(tree->root, out);
 }
 
-static void free_nodes(TreeNode *root) {
+static void tree_free_nodes(TreeNode *root) {
     if (root == NULL)
         return;
 
-    free_nodes(root->left);
-    free_nodes(root->right);
+    tree_free_nodes(root->left);
+    tree_free_nodes(root->right);
     free(root);
 }
 
-void clear_tree(Tree *tree) {
-    free_nodes(tree->root);
+void tree_clear(Tree *tree) {
+    tree_free_nodes(tree->root);
     tree->root = NULL;
 }
 
-void delete_tree(Tree *tree) {
-    clear_tree(tree);
+void tree_destroy(Tree *tree) {
+    tree_clear(tree);
     free(tree);
 }

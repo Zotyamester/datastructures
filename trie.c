@@ -4,7 +4,7 @@
  * This file defines the declarations and struct Trie and TrieNode from 'trie.h'.
  * @author Zoltan Szatmary
  *
- **/
+ */
 
 #include "trie.h"
 #include <string.h>
@@ -114,7 +114,7 @@ static void trie_free_nodes(TrieNode *root)
     }
     free(root);
 }
-void trie_delete(Trie *trie)
+void trie_destroy(Trie *trie)
 {
     trie_free_nodes(trie->root);
     free(trie);

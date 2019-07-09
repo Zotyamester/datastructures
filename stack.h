@@ -6,12 +6,12 @@
  * (By default its implementations is a vector.)
  * @author Zoltan Szatmary
  *
- **/
+ */
 
 #ifndef STACK_H
 #define STACK_H
 
-/** If the 'LIST_STACK' macro is defined, then it's going to be a list. **/
+/** If the 'LIST_STACK' macro is defined, then it's going to be a list. */
 #ifdef LIST_STACK
 #include "list.h"
 typedef List Stack;
@@ -84,12 +84,12 @@ inline void stack_clear(Stack *stack)
     vector_clear(stack);
 #endif
 }
-inline void stack_delete(Stack *stack)
+inline void stack_destroy(Stack *stack)
 {
 #ifdef LIST_STACK
-    list_delete(stack);
+    list_destroy(stack);
 #else
-    vector_delete(stack);
+    vector_destroy(stack);
 #endif
 }
 

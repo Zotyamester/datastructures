@@ -4,7 +4,7 @@
  * This file contains the declarations of hashtable functions.
  * @author Zoltan Szatmary
  *
- **/
+ */
 
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
@@ -23,10 +23,10 @@ typedef struct Bucket {
 
 typedef struct HashTable HashTable;
 
-HashTable *create_hashtable();
-void set_hashtable_h(HashTable *htable, int key, int val, int (*hash_f)(int));
-void set_hashtable(HashTable *htable, int key, int val);
-int *get_hashtableitem(HashTable *htable, int key);
-void delete_hashtable(HashTable *htable);
+HashTable *hashtable_create();
+void hashtable_set_h(HashTable *htable, int key, int val, int (*hash_f)(int));
+void hashtable_set(HashTable *htable, int key, int val);
+int *hashtable_get(HashTable *htable, int key);
+void hashtable_destroy(HashTable *htable);
 
-#endif // HASHTABLE_H
+#endif /* HASHTABLE_H */
