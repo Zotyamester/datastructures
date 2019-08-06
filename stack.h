@@ -20,7 +20,7 @@ typedef List Stack;
 typedef Vector Stack;
 #endif
 
-inline Stack *stack_create()
+extern inline Stack *stack_create()
 {
 #ifdef LIST_STACK
     return list_create();
@@ -28,7 +28,7 @@ inline Stack *stack_create()
     return vector_create();
 #endif
 }
-inline void stack_push(Stack *stack, int data)
+extern inline void stack_push(Stack *stack, int data)
 {
 #ifdef LIST_STACK
     list_push_back(stack, data);
@@ -36,7 +36,7 @@ inline void stack_push(Stack *stack, int data)
     vector_push_back(stack, data);
 #endif
 }
-inline void stack_pop(Stack *stack)
+extern inline void stack_pop(Stack *stack)
 {
 #ifdef LIST_STACK
     list_pop_back(stack);
@@ -44,7 +44,7 @@ inline void stack_pop(Stack *stack)
     vector_pop_back(stack);
 #endif
 }
-inline int stack_top(Stack *stack)
+extern inline int stack_top(Stack *stack)
 {
 #ifdef LIST_STACK
     return list_back(stack);
@@ -52,7 +52,7 @@ inline int stack_top(Stack *stack)
     return vector_back(stack);
 #endif
 }
-inline size_t stack_size(Stack *stack)
+extern inline size_t stack_size(Stack *stack)
 {
 #ifdef LIST_STACK
     return list_size(stack);
@@ -60,7 +60,7 @@ inline size_t stack_size(Stack *stack)
     return vector_size(stack);
 #endif
 }
-inline bool stack_empty(Stack *stack)
+extern inline bool stack_empty(Stack *stack)
 {
 #ifdef LIST_STACK
     return list_empty(stack);
@@ -68,7 +68,7 @@ inline bool stack_empty(Stack *stack)
     return vector_empty(stack);
 #endif
 }
-inline void stack_print(Stack *stack, FILE *fp)
+extern inline void stack_print(Stack *stack, FILE *fp)
 {
 #ifdef LIST_STACK
     list_print(stack, fp);
@@ -76,7 +76,7 @@ inline void stack_print(Stack *stack, FILE *fp)
     vector_print(stack, fp);
 #endif
 }
-inline void stack_clear(Stack *stack)
+extern inline void stack_clear(Stack *stack)
 {
 #ifdef LIST_STACK
     list_clear(stack);
@@ -84,7 +84,7 @@ inline void stack_clear(Stack *stack)
     vector_clear(stack);
 #endif
 }
-inline void stack_destroy(Stack *stack)
+extern inline void stack_destroy(Stack *stack)
 {
 #ifdef LIST_STACK
     list_destroy(stack);

@@ -20,7 +20,7 @@ typedef List Queue;
 typedef Vector Queue;
 #endif
 
-inline Queue *queue_create()
+extern inline Queue *queue_create()
 {
 #ifdef LIST_QUEUE
     return list_create();
@@ -28,7 +28,7 @@ inline Queue *queue_create()
     return vector_create();
 #endif
 }
-inline void queue_push(Queue *queue, int data)
+extern inline void queue_push(Queue *queue, int data)
 {
 #ifdef LIST_QUEUE
     list_push_front(queue, data);
@@ -36,7 +36,7 @@ inline void queue_push(Queue *queue, int data)
     vector_push_front(queue, data);
 #endif
 }
-inline void queue_pop(Queue *queue)
+extern inline void queue_pop(Queue *queue)
 {
 #ifdef LIST_QUEUE
     list_pop_back(queue);
@@ -44,7 +44,7 @@ inline void queue_pop(Queue *queue)
     vector_pop_back(queue);
 #endif
 }
-inline int queue_top(Queue *queue)
+extern inline int queue_top(Queue *queue)
 {
 #ifdef LIST_QUEUE
     return list_back(queue);
@@ -52,7 +52,7 @@ inline int queue_top(Queue *queue)
     return vector_back(queue);
 #endif
 }
-inline size_t queue_size(Queue *queue)
+extern inline size_t queue_size(Queue *queue)
 {
 #ifdef LIST_QUEUE
     return list_size(queue);
@@ -60,7 +60,7 @@ inline size_t queue_size(Queue *queue)
     return vector_size(queue);
 #endif
 }
-inline bool queue_empty(Queue *queue)
+extern inline bool queue_empty(Queue *queue)
 {
 #ifdef LIST_QUEUE
     return list_empty(queue);
@@ -68,7 +68,7 @@ inline bool queue_empty(Queue *queue)
     return vector_empty(queue);
 #endif
 }
-inline void queue_print(Queue *queue, FILE *fp)
+extern inline void queue_print(Queue *queue, FILE *fp)
 {
 #ifdef LIST_QUEUE
     list_print(queue, fp);
@@ -76,7 +76,7 @@ inline void queue_print(Queue *queue, FILE *fp)
     vector_print(queue, fp);
 #endif
 }
-inline void queue_clear(Queue *queue)
+extern inline void queue_clear(Queue *queue)
 {
 #ifdef LIST_QUEUE
     list_clear(queue);
@@ -84,7 +84,7 @@ inline void queue_clear(Queue *queue)
     vector_clear(queue);
 #endif
 }
-inline void queue_destroy(Queue *queue)
+extern inline void queue_destroy(Queue *queue)
 {
 #ifdef LIST_QUEUE
     list_destroy(queue);
