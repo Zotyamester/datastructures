@@ -1,0 +1,2 @@
+class HashTable(dict):
+    pass
