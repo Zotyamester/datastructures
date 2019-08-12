@@ -25,7 +25,7 @@ Trie *trie_create_from_strings(const char **strs, size_t size);
 /** Inserts the string into the trie. */
 void trie_insert(Trie *trie, const char *str);
 /** Searches for the given string and returns true if it finds. */
-bool trie_search(Trie *trie, const char *str);
+bool trie_find(Trie *trie, const char *str);
 /** Prints the contained strings of the trie to the given out. */
 void trie_print(Trie *trie, FILE *fp);
 /** Deletes and frees the dynamically allocated Trie and its nodes. */

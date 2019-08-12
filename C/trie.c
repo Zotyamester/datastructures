@@ -10,10 +10,8 @@
 #include <string.h>
 
 typedef struct TrieNode {
-    struct {
-        bool is_valid;
-        struct TrieNode *link;
-    } data[26];
+    bool valid;
+    struct TrieNode *links[128];
 } TrieNode;
 
 struct Trie {
@@ -25,27 +23,31 @@ Trie *trie_create()
     Trie *trie = (Trie*) malloc(sizeof(Trie));
     if (trie == NULL)
         return NULL;
-    trie->root = NULL;
+    trie->root = (TrieNode*) malloc(sizeof(TrieNode));
+    if (trie->root == NULL) {
+        free(trie);
+        return NULL;
+    }
+    trie->root->valid = false;
+    for (size_t i = 0; i < 128; ++i)
+        trie->root->links[i] = NULL;
     return trie;
 }
-static TrieNode *trie_insert_node(TrieNode *node, const char *str)
+static TrieNode *trie_insert_node(TrieNode *root, const char *str)
 {
-    if (*str == '\0') return node;
-    size_t index = (*str) - 'A';
-    if (node == NULL) {
-        node = (TrieNode*) malloc(sizeof(TrieNode));
-        if (node == NULL)
+    if (root == NULL) {
+        root = (TrieNode*) malloc(sizeof(TrieNode));
+        if (root == NULL)
             return NULL;
-        for (size_t i = 0; i < 26; ++i) {
-            node->data[i].is_valid = false;
-            node->data[i].link = NULL;
-        }
+        root->valid = false;
+        for (size_t i = 0; i < 128; ++i)
+            root->links[i] = NULL;
     }
-    if (str[1] == '\0')
-        node->data[index].is_valid = true;
+    if (*str == '\0')
+        root->valid = true;
     else
-        node->data[index].link = trie_insert_node(node->data[index].link,  str + 1);
-    return node;
+        root->links[*str] = trie_insert_node(root->links[*str], str + 1);
+    return root;
 }
 Trie *trie_create_from_strings(const char **strs, size_t size)
 {
@@ -64,19 +66,12 @@ void trie_insert(Trie *trie, const char *str)
 static bool trie_match(TrieNode *root, const char *str)
 {
     if (root == NULL)
-        return *str == '\0';
-    if (*str == '\0')
         return false;
-
-    size_t index = (*str) - 'A';
-
-    if (str[1] == '\0') {
-        return root->data[index].is_valid;
-    } else {
-        return trie_match(root->data[index].link, str + 1);
-    }
+    if (*str == '\0')
+        return root->valid;
+    return trie_match(root->links[*str], str + 1);
 }
-bool trie_search(Trie *trie, const char *str)
+bool trie_find(Trie *trie, const char *str)
 {
     return trie_match(trie->root, str);
 }
@@ -84,20 +79,17 @@ static void trie_print_valids(TrieNode *root, char *pprefix, FILE *fp)
 {
     if (root == NULL)
         return;
-    char c;
+    if (root->valid)
+        fprintf(fp, "%s\n", pprefix);
     size_t len = strlen(pprefix);
     char *nprefix = (char*) malloc((len + 2) * sizeof(char));
     if (nprefix == NULL)
         return;
     strncpy(nprefix, pprefix, len);
     nprefix[len + 1] = '\0';
-    for (size_t i = 0; i < 26; ++i) {
-        c = 'A' + i;
-        if (root->data[i].is_valid) {
-            fprintf(fp, "%s%c\n", pprefix, c);
-        }
-        nprefix[len] = c;
-        trie_print_valids(root->data[i].link, nprefix, fp);
+    for (size_t i = 0; i < 128; ++i) {
+        nprefix[len] = i;
+        trie_print_valids(root->links[i], nprefix, fp);
     }
     free(nprefix);
 }
@@ -109,8 +101,8 @@ static void trie_free_nodes(TrieNode *root)
 {
     if (root == NULL)
         return;
-    for (size_t i = 0; i < 26; ++i) {
-        trie_free_nodes(root->data[i].link);
+    for (size_t i = 0; i < 128; ++i) {
+        trie_free_nodes(root->links[i]);
     }
     free(root);
 }
