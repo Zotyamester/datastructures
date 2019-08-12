@@ -4,7 +4,7 @@
  * This file contains the declarations of tree-related functions.
  * @author Zoltan Szatmary
  *
-  */
+ */
 
 #ifndef TREE_H
 #define TREE_H
