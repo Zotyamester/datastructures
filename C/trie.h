@@ -2,7 +2,7 @@
  * \file trie.h
  *
  * This file contains the declarations of trie-related functions.
- * The trie can tell if a string is in the trie or not.
+ * The trie can map a string to a function.
  * @author Zoltan Szatmary
  *
  */
@@ -12,20 +12,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 typedef struct Trie Trie;
 
+typedef void (*function)(void);
+
 /** Dynamically allocates a Trie (aka struct Trie). */
 Trie *trie_create();
-/** Dynamically allocates a Trie (with trie_create)
- * and fills it with the elements of the given array (of strings)
- */
-Trie *trie_create_from_strings(const char **strs, size_t size);
 /** Inserts the string into the trie. */
-void trie_insert(Trie *trie, const char *str);
+void trie_insert(Trie *trie, const char *str, function func);
 /** Searches for the given string and returns true if it finds. */
-bool trie_find(Trie *trie, const char *str);
+function trie_find(Trie *trie, const char *str);
 /** Prints the contained strings of the trie to the given out. */
 void trie_print(Trie *trie, FILE *fp);
 /** Deletes and frees the dynamically allocated Trie and its nodes. */

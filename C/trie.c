@@ -10,7 +10,7 @@
 #include <string.h>
 
 typedef struct TrieNode {
-    bool valid;
+    function func;
     struct TrieNode *links[128];
 } TrieNode;
 
@@ -28,50 +28,41 @@ Trie *trie_create()
         free(trie);
         return NULL;
     }
-    trie->root->valid = false;
+    trie->root->func = NULL;
     for (size_t i = 0; i < 128; ++i)
         trie->root->links[i] = NULL;
     return trie;
 }
-static TrieNode *trie_insert_node(TrieNode *root, const char *str)
+static TrieNode *trie_insert_node(TrieNode *root, const char *str, function func)
 {
     if (root == NULL) {
         root = (TrieNode*) malloc(sizeof(TrieNode));
         if (root == NULL)
             return NULL;
-        root->valid = false;
+        root->func = NULL;
         for (size_t i = 0; i < 128; ++i)
             root->links[i] = NULL;
     }
     if (*str == '\0')
-        root->valid = true;
+        root->func = func;
     else
-        root->links[*str] = trie_insert_node(root->links[*str], str + 1);
+        root->links[*str] = trie_insert_node(root->links[*str], str + 1, func);
     return root;
 }
-Trie *trie_create_from_strings(const char **strs, size_t size)
+void trie_insert(Trie *trie, const char *str, function func)
 {
-    Trie *trie = trie_create();
-    if (trie == NULL)
-        return NULL;
-    for (size_t i = 0; i < size; ++i) {
-        trie->root = trie_insert_node(trie->root, strs[i]);
-    }
-    return trie;
+    trie->root = trie_insert_node(trie->root, str, func);
 }
-void trie_insert(Trie *trie, const char *str)
-{
-    trie->root = trie_insert_node(trie->root, str);
-}
-static bool trie_match(TrieNode *root, const char *str)
+
+static function trie_match(TrieNode *root, const char *str)
 {
     if (root == NULL)
-        return false;
+        return NULL;
     if (*str == '\0')
-        return root->valid;
+        return root->func;
     return trie_match(root->links[*str], str + 1);
 }
-bool trie_find(Trie *trie, const char *str)
+function trie_find(Trie *trie, const char *str)
 {
     return trie_match(trie->root, str);
 }
@@ -79,7 +70,7 @@ static void trie_print_valids(TrieNode *root, char *pprefix, FILE *fp)
 {
     if (root == NULL)
         return;
-    if (root->valid)
+    if (root->func)
         fprintf(fp, "%s\n", pprefix);
     size_t len = strlen(pprefix);
     char *nprefix = (char*) malloc((len + 2) * sizeof(char));
