@@ -29,6 +29,7 @@ Vector *vector_create()
     }
     return vector;
 }
+
 Vector *vector_create_with_size(size_t size)
 {
     Vector *vector = (Vector*) malloc(sizeof(Vector));
@@ -43,6 +44,7 @@ Vector *vector_create_with_size(size_t size)
     }
     return vector;
 }
+
 Vector *vector_create_from_array(int *array, size_t size)
 {
     Vector *vector = vector_create_with_size(size);
@@ -51,6 +53,7 @@ Vector *vector_create_from_array(int *array, size_t size)
     memcpy(vector->data, array, size * sizeof(int));
     return vector;
 }
+
 Vector *vector_scan(FILE *fp)
 {
     Vector *vector = vector_create();
@@ -62,6 +65,7 @@ Vector *vector_scan(FILE *fp)
     }
     return vector;
 }
+
 Vector *vector_copy(Vector *vector)
 {
     Vector *new_vector = vector_create_with_size(vector->size);
@@ -70,6 +74,7 @@ Vector *vector_copy(Vector *vector)
     memcpy(new_vector->data, vector->data, vector->size * sizeof(int));
     return new_vector;
 }
+
 Vector *vector_sub(Vector *vector, size_t from, size_t to)
 {
     size_t size = to - from;
@@ -80,19 +85,23 @@ Vector *vector_sub(Vector *vector, size_t from, size_t to)
         new_vector->data[i] = vector->data[from + i];
     return new_vector;
 }
+
 void vector_link(Vector *vector, Vector *other)
 {
     if (vector_resize(vector, vector->size + other->size))
         memcpy(vector->data + vector->size, other->data, other->size * sizeof(int));
 }
+
 size_t vector_size(Vector *vector)
 {
     return vector->size;
 }
+
 bool vector_empty(Vector *vector)
 {
     return vector->size == 0;
 }
+
 void vector_reverse(Vector *vector)
 {
     size_t n = vector->size / 2;
@@ -102,94 +111,95 @@ void vector_reverse(Vector *vector)
         vector->data[vector->size - 1 -i] = temp;
     }
 }
+
+static bool vector_double(Vector *vector)
+{
+    size_t capacity = vector->capacity * 2;
+    int *arr = (int*) malloc(capacity * sizeof(int));
+    if (arr == NULL)
+        return false;
+    vector->capacity = capacity;
+    memcpy(arr, vector->data, vector->size * sizeof(int));
+    free(vector->data);
+    vector->data = arr;
+    return true;
+}
+
 void vector_insert(Vector *vector, size_t index, int data)
 {
-    if (vector->size + 1 == vector->capacity) {
-        size_t capacity = vector->capacity * 2;
-        int *arr = (int*) malloc(capacity * sizeof(int));
-        if (arr == NULL)
-            return;
-        vector->capacity = capacity;
-        memcpy(arr, vector->data, vector->size * sizeof(int));
-        free(vector->data);
-        vector->data = arr;
-    }
+    if (vector->size + 1 == vector->capacity && !vector_double(vector))
+        return;
     for (size_t i = vector->size; i > index; --i)
         vector->data[i] = vector->data[i - 1];
     vector->data[index] = data;
     ++vector->size;
 }
+
 void vector_push_front(Vector *vector, int data)
 {
-    if (vector->size + 1 == vector->capacity) {
-        size_t capacity = vector->capacity * 2;
-        int *arr = (int*) malloc(capacity * sizeof(int));
-        if (arr == NULL)
-            return;
-        vector->capacity = capacity;
-        memcpy(arr, vector->data, vector->size * sizeof(int));
-        free(vector->data);
-        vector->data = arr;
-    }
+    if (vector->size + 1 == vector->capacity && !vector_double(vector))
+        return;
     for (size_t i = vector->size; i > 0; --i)
         vector->data[i] = vector->data[i - 1];
     vector->data[0] = data;
     ++vector->size;
 }
+
 void vector_push_back(Vector *vector, int data)
 {
-    if (vector->size + 1 == vector->capacity) {
-        size_t capacity = vector->capacity * 2;
-        int *arr = (int*) malloc(capacity * sizeof(int));
-        if (arr == NULL)
-            return;
-        vector->capacity = capacity;
-        memcpy(arr, vector->data, vector->size * sizeof(int));
-        free(vector->data);
-        vector->data = arr;
-    }
+    if (vector->size + 1 == vector->capacity && !vector_double(vector))
+        return;
     vector->data[vector->size++] = data;
 }
+
 void vector_pop_front(Vector *vector)
 {
-    size_t end = vector->size - 1;
-    for (size_t i = 0; i < end; ++i)
-        vector[i] = vector[i + 1];
+    for (size_t i = 1; i < vector->size; ++i)
+        vector->data[i - 1] = vector->data[i];
     --vector->size;
 }
+
 void vector_pop_back(Vector *vector)
 {
     --vector->size;
 }
+
 int vector_front(Vector *vector)
 {
     return vector->data[0];
 }
+
 int vector_back(Vector *vector)
 {
     return vector->data[vector->size - 1];
 }
+
 int *vector_get(Vector *vector, size_t index)
 {
     return &vector->data[index];
 }
+
 VectorIter vector_begin(Vector *vector)
 {
     return vector->data;
 }
+
 VectorIter vector_end(Vector *vector)
 {
     return vector->data + vector->size;
 }
+
 inline VectorIter vector_next(VectorIter iter)
 {
     return ++iter;
 }
+
 void vector_print(Vector *vector, FILE *fp)
 {
     for (size_t i = 0; i < vector->size; ++i)
         fprintf(fp, "%d ", vector->data[i]);
 }
+
 void vector_clear(Vector *vector)
 {
     vector->capacity = VECTOR_DEFAULT_CAPACITY;
@@ -200,6 +210,31 @@ void vector_clear(Vector *vector)
     free(vector->data);
     vector->data = arr;
 }
+
+size_t vector_to_array(Vector *vector, int **array_ptr)
+{
+    int *array = (int*) malloc(vector->size * sizeof(int));
+    if (array == NULL) {
+        *array_ptr = NULL;
+        return 0;
+    }
+    memcpy(array, vector->data, vector->size * sizeof(int));
+    return vector->size;
+}
+
+void vector_remove_item(Vector *vector, int data)
+{
+    size_t i;
+    for (i = 0; i < vector->size; ++i)
+        if (vector->data[i] == data)
+            break;
+    if (i == vector->size)
+        return;
+    for (++i; i < vector->size; ++i)
+        vector->data[i - 1] = vector->data[i];
+    --vector->size;
+}
+
 bool vector_resize(Vector *vector, size_t size)
 {
     if (size >= vector->capacity) {
@@ -217,16 +252,7 @@ bool vector_resize(Vector *vector, size_t size)
     vector->size = size;
     return true;
 }
-size_t vector_to_array(Vector *vector, int **array_ptr)
-{
-    int *array = (int*) malloc(vector->size * sizeof(int));
-    if (array == NULL) {
-        *array_ptr = NULL;
-        return 0;
-    }
-    memcpy(array, vector->data, vector->size * sizeof(int));
-    return vector->size;
-}
+
 void vector_destroy(Vector *vector)
 {
     free(vector->data);
