@@ -347,7 +347,7 @@ int *list_get(List *list, size_t index)
     return &moving->data;
 }
 
-size_t list_to_array(int **array_ptr, List *list)
+size_t list_to_array(List *list, int **array_ptr)
 {
     int *array = (int*) malloc(list->size*sizeof(int));
     if (array == NULL) {
