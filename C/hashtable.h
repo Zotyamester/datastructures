@@ -11,22 +11,23 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 #define HASH_SIZE 50
 
 typedef struct Bucket {
-    int key;
-    int val;
+    void *key;
+    void *val;
     struct Bucket *next;
 } Bucket;
 
 typedef struct HashTable HashTable;
 
 HashTable *hashtable_create();
-void hashtable_set_h(HashTable *htable, int key, int val, int (*hash_f)(int));
-void hashtable_set(HashTable *htable, int key, int val);
-int *hashtable_get(HashTable *htable, int key);
+HashTable *hashtable_create_with_functions(size_t (*hash_f)(void *), int (*cmp_f)(void *, void *));
+void **hashtable_get(HashTable *htable, void *key);
+bool hashtable_find(HashTable *htable, void *key);
 void hashtable_destroy(HashTable *htable);
 
 #endif /* HASHTABLE_H */

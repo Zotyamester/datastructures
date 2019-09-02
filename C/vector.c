@@ -189,11 +189,6 @@ VectorIter vector_end(Vector *vector)
     return vector->data + vector->size;
 }
 
-inline VectorIter vector_next(VectorIter iter)
-{
-    return ++iter;
-}
-
 void vector_print(Vector *vector, FILE *fp, void (*printer)(FILE *, void *))
 {
     for (size_t i = 0; i < vector->size; ++i) {

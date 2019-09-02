@@ -81,7 +81,10 @@ VectorIter vector_begin(Vector *vector);
 VectorIter vector_end(Vector *vector);
 
 /** Steps one with the iterator. Returns with the next element in the vector. */
-extern inline VectorIter vector_next(VectorIter iter);
+inline VectorIter vector_next(VectorIter iter)
+{
+    return ++iter;
+}
 
 /** Prints the vector to the give out separated by spaces (without an ending '\n'). */
 void vector_print(Vector *vector, FILE *fp, void (*printer)(FILE *, void *));

@@ -79,10 +79,16 @@ void **list_get(List *list, size_t index);
 ListNode *list_begin(List *list);
 
 /** Returns with NULL which is basically the end of the list. */
-extern inline ListNode *list_end(List *list);
+inline ListNode *list_end(List *list)
+{
+    return NULL;
+}
 
 /** Steps one with the iterator. Returns with the next element in the list. */
-extern inline ListNode *list_next(ListNode *node);
+inline ListNode *list_next(ListNode *node)
+{
+    return node->next;
+}
 
 /** Prints the list to the give out separated by spaces (without an ending '\n'). */
 void list_print(List *list, FILE *fp, void (*printer)(FILE *, void *));

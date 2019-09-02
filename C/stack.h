@@ -20,7 +20,7 @@ typedef List Stack;
 typedef Vector Stack;
 #endif
 
-extern inline Stack *stack_create()
+inline Stack *stack_create()
 {
 #ifdef LIST_STACK
     return list_create();
@@ -28,7 +28,7 @@ extern inline Stack *stack_create()
     return vector_create();
 #endif
 }
-extern inline void stack_push(Stack *stack, int data)
+inline void stack_push(Stack *stack, void *data)
 {
 #ifdef LIST_STACK
     list_push_back(stack, data);
@@ -36,7 +36,7 @@ extern inline void stack_push(Stack *stack, int data)
     vector_push_back(stack, data);
 #endif
 }
-extern inline void stack_pop(Stack *stack)
+inline void stack_pop(Stack *stack)
 {
 #ifdef LIST_STACK
     list_pop_back(stack);
@@ -44,7 +44,7 @@ extern inline void stack_pop(Stack *stack)
     vector_pop_back(stack);
 #endif
 }
-extern inline int stack_top(Stack *stack)
+inline void *stack_top(Stack *stack)
 {
 #ifdef LIST_STACK
     return list_back(stack);
@@ -52,7 +52,7 @@ extern inline int stack_top(Stack *stack)
     return vector_back(stack);
 #endif
 }
-extern inline size_t stack_size(Stack *stack)
+inline size_t stack_size(Stack *stack)
 {
 #ifdef LIST_STACK
     return list_size(stack);
@@ -60,7 +60,7 @@ extern inline size_t stack_size(Stack *stack)
     return vector_size(stack);
 #endif
 }
-extern inline bool stack_empty(Stack *stack)
+inline bool stack_empty(Stack *stack)
 {
 #ifdef LIST_STACK
     return list_empty(stack);
@@ -68,15 +68,15 @@ extern inline bool stack_empty(Stack *stack)
     return vector_empty(stack);
 #endif
 }
-extern inline void stack_print(Stack *stack, FILE *fp)
+inline void stack_print(Stack *stack, FILE *fp, void (*printer)(FILE *fp, void *))
 {
 #ifdef LIST_STACK
-    list_print(stack, fp);
+    list_print(stack, fp, printer);
 #else
-    vector_print(stack, fp);
+    vector_print(stack, fp, printer);
 #endif
 }
-extern inline void stack_clear(Stack *stack)
+inline void stack_clear(Stack *stack)
 {
 #ifdef LIST_STACK
     list_clear(stack);
@@ -84,7 +84,7 @@ extern inline void stack_clear(Stack *stack)
     vector_clear(stack);
 #endif
 }
-extern inline void stack_destroy(Stack *stack)
+inline void stack_destroy(Stack *stack)
 {
 #ifdef LIST_STACK
     list_destroy(stack);

@@ -20,7 +20,7 @@ typedef List Queue;
 typedef Vector Queue;
 #endif
 
-extern inline Queue *queue_create()
+inline Queue *queue_create()
 {
 #ifdef LIST_QUEUE
     return list_create();
@@ -28,7 +28,7 @@ extern inline Queue *queue_create()
     return vector_create();
 #endif
 }
-extern inline void queue_push(Queue *queue, int data)
+inline void queue_push(Queue *queue, void *data)
 {
 #ifdef LIST_QUEUE
     list_push_front(queue, data);
@@ -36,7 +36,7 @@ extern inline void queue_push(Queue *queue, int data)
     vector_push_front(queue, data);
 #endif
 }
-extern inline void queue_pop(Queue *queue)
+inline void queue_pop(Queue *queue)
 {
 #ifdef LIST_QUEUE
     list_pop_back(queue);
@@ -44,7 +44,7 @@ extern inline void queue_pop(Queue *queue)
     vector_pop_back(queue);
 #endif
 }
-extern inline int queue_top(Queue *queue)
+inline void *queue_top(Queue *queue)
 {
 #ifdef LIST_QUEUE
     return list_back(queue);
@@ -52,7 +52,7 @@ extern inline int queue_top(Queue *queue)
     return vector_back(queue);
 #endif
 }
-extern inline size_t queue_size(Queue *queue)
+inline size_t queue_size(Queue *queue)
 {
 #ifdef LIST_QUEUE
     return list_size(queue);
@@ -60,7 +60,7 @@ extern inline size_t queue_size(Queue *queue)
     return vector_size(queue);
 #endif
 }
-extern inline bool queue_empty(Queue *queue)
+inline bool queue_empty(Queue *queue)
 {
 #ifdef LIST_QUEUE
     return list_empty(queue);
@@ -68,15 +68,15 @@ extern inline bool queue_empty(Queue *queue)
     return vector_empty(queue);
 #endif
 }
-extern inline void queue_print(Queue *queue, FILE *fp)
+inline void queue_print(Queue *queue, FILE *fp, void (*printer)(FILE *fp, void *))
 {
 #ifdef LIST_QUEUE
-    list_print(queue, fp);
+    list_print(queue, fp, printer);
 #else
-    vector_print(queue, fp);
+    vector_print(queue, fp, printer);
 #endif
 }
-extern inline void queue_clear(Queue *queue)
+inline void queue_clear(Queue *queue)
 {
 #ifdef LIST_QUEUE
     list_clear(queue);
@@ -84,7 +84,7 @@ extern inline void queue_clear(Queue *queue)
     vector_clear(queue);
 #endif
 }
-extern inline void queue_destroy(Queue *queue)
+inline void queue_destroy(Queue *queue)
 {
 #ifdef LIST_QUEUE
     list_destroy(queue);

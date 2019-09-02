@@ -323,16 +323,6 @@ ListNode *list_begin(List *list)
     return list->head;
 }
 
-inline ListNode *list_end(List *list)
-{
-    return NULL;
-}
-
-inline ListNode *list_next(ListNode *node)
-{
-    return node->next;
-}
-
 void list_print(List *list, FILE *fp, void (*printer)(FILE *, void *))
 {
     for (ListNode *moving = list->head; moving != NULL; moving = moving->next) {
