@@ -102,7 +102,7 @@ static void hashtable_free_bucket(Bucket *b)
 
 void hashtable_destroy(HashTable *htable)
 {
-    for (size_t i = 0; i < HASH_SIZE; ++i) {
+    for (size_t i = 0; i < HASH_SIZE; i++) {
         if (htable->data[i] != NULL)
             hashtable_free_bucket(htable->data[i]);
     }

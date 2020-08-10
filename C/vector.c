@@ -81,7 +81,7 @@ Vector *vector_sub(Vector *vector, size_t from, size_t to)
     Vector *new_vector = vector_create_with_size(vector->size);
     if (new_vector == NULL)
         return NULL;
-    for (size_t i = 0; i < size; ++i)
+    for (size_t i = 0; i < size; i++)
         new_vector->data[i] = vector->data[from + i];
     return new_vector;
 }
@@ -105,7 +105,7 @@ bool vector_empty(Vector *vector)
 void vector_reverse(Vector *vector)
 {
     size_t n = vector->size / 2;
-    for (size_t i = 0; i < n; ++i) {
+    for (size_t i = 0; i < n; i++) {
         void *temp = vector->data[i];
         vector->data[i] = vector->data[vector->size - 1 - i];
         vector->data[vector->size - 1 -i] = temp;
@@ -129,20 +129,20 @@ void vector_insert(Vector *vector, size_t index, void *data)
 {
     if (vector->size + 1 == vector->capacity && !vector_double(vector))
         return;
-    for (size_t i = vector->size; i > index; --i)
+    for (size_t i = vector->size; i > index; i--)
         vector->data[i] = vector->data[i - 1];
     vector->data[index] = data;
-    ++vector->size;
+    vector->size++;
 }
 
 void vector_push_front(Vector *vector, void *data)
 {
     if (vector->size + 1 == vector->capacity && !vector_double(vector))
         return;
-    for (size_t i = vector->size; i > 0; --i)
+    for (size_t i = vector->size; i > 0; i--)
         vector->data[i] = vector->data[i - 1];
     vector->data[0] = data;
-    ++vector->size;
+    vector->size++;
 }
 
 void vector_push_back(Vector *vector, void *data)
@@ -154,14 +154,14 @@ void vector_push_back(Vector *vector, void *data)
 
 void vector_pop_front(Vector *vector)
 {
-    for (size_t i = 1; i < vector->size; ++i)
+    for (size_t i = 1; i < vector->size; i++)
         vector->data[i - 1] = vector->data[i];
-    --vector->size;
+    vector->size--;
 }
 
 void vector_pop_back(Vector *vector)
 {
-    --vector->size;
+    vector->size--;
 }
 
 void *vector_front(Vector *vector)
@@ -191,7 +191,7 @@ VectorIter vector_end(Vector *vector)
 
 void vector_print(Vector *vector, FILE *fp, void (*printer)(FILE *, void *))
 {
-    for (size_t i = 0; i < vector->size; ++i) {
+    for (size_t i = 0; i < vector->size; i++) {
         printer(fp, vector->data[i]);
         putc(' ', fp);
     }
@@ -199,7 +199,7 @@ void vector_print(Vector *vector, FILE *fp, void (*printer)(FILE *, void *))
 
 void vector_free_data(Vector *vector)
 {
-    for (size_t i = 0; i < vector->size; ++i) {
+    for (size_t i = 0; i < vector->size; i++) {
         free(vector->data[i]);
         vector->data[i] = NULL;
     }
@@ -230,14 +230,14 @@ size_t vector_to_array(Vector *vector, void ***array_ptr)
 void vector_remove_item(Vector *vector, void *data)
 {
     size_t i;
-    for (i = 0; i < vector->size; ++i)
+    for (i = 0; i < vector->size; i++)
         if (vector->data[i] == data)
             break;
     if (i == vector->size)
         return;
-    for (++i; i < vector->size; ++i)
+    for (i++; i < vector->size; i++)
         vector->data[i - 1] = vector->data[i];
-    --vector->size;
+    vector->size--;
 }
 
 bool vector_resize(Vector *vector, size_t size)

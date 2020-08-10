@@ -29,7 +29,7 @@ Trie *trie_create()
         return NULL;
     }
     trie->root->func = NULL;
-    for (size_t i = 0; i < 128; ++i)
+    for (size_t i = 0; i < 128; i++)
         trie->root->links[i] = NULL;
     return trie;
 }
@@ -40,7 +40,7 @@ static TrieNode *trie_insert_node(TrieNode *root, const char *str, function func
         if (root == NULL)
             return NULL;
         root->func = NULL;
-        for (size_t i = 0; i < 128; ++i)
+        for (size_t i = 0; i < 128; i++)
             root->links[i] = NULL;
     }
     if (*str == '\0')
@@ -78,7 +78,7 @@ static void trie_print_valids(TrieNode *root, char *pprefix, FILE *fp)
         return;
     strncpy(nprefix, pprefix, len);
     nprefix[len + 1] = '\0';
-    for (size_t i = 0; i < 128; ++i) {
+    for (size_t i = 0; i < 128; i++) {
         nprefix[len] = i;
         trie_print_valids(root->links[i], nprefix, fp);
     }
@@ -92,7 +92,7 @@ static void trie_free_nodes(TrieNode *root)
 {
     if (root == NULL)
         return;
-    for (size_t i = 0; i < 128; ++i) {
+    for (size_t i = 0; i < 128; i++) {
         trie_free_nodes(root->links[i]);
     }
     free(root);
