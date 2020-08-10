@@ -1,3 +1,11 @@
+/**
+ * \file list.c
+ *
+ * This file defines the declarations and struct Tree from 'tree.h'.
+ * @author Zoltan Szatmary
+ *
+ */
+
 #include "tree.h"
 
 struct Tree {
